@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Contact — BrightLearn</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="main.js"></script>
+<!-- reCAPTCHA -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+<header class="site-header"><div class="brand"><img src="assets/logo-placeholder.png" class="logo"><h1>BrightLearn</h1></div>
+<nav class="nav"><a href="index.html">Home</a><a href="courses.html">Courses</a><a href="about.html">About</a><a href="faq.html">FAQ</a><a href="contact.html" class="cta">Contact</a></nav></header>
+
+<main class="container">
+  <h2>Contact Us</h2>
+  <form id="contactForm" method="POST" action="submit_contact.php" novalidate>
+    <label for="name">Name</label>
+    <input id="name" name="name" required>
+
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" required>
+
+    <label for="message">Message</label>
+    <textarea id="message" name="message" required></textarea>
+
+    <!-- reCAPTCHA widget: replace SITE_KEY in README -->
+    <div class="g-recaptcha" data-sitekey="REPLACE_WITH_SITE_KEY"></div>
+
+    <button type="submit" class="btn">Send Message</button>
+  </form>
+  <div id="result" role="status"></div>
+</main>
+
+<footer class="site-footer"><p>&copy; BrightLearn</p></footer>
+</body>
+</html>

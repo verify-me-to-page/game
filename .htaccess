@@ -1,0 +1,23 @@
+# .htaccess for Apache (optional). Place in web root if using Apache.
+# Disable directory listing
+Options -Indexes
+
+# Security headers
+<IfModule mod_headers.c>
+  Header set X-Frame-Options "DENY"
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "no-referrer-when-downgrade"
+  Header set Content-Security-Policy "default-src 'self' https://www.google.com https://www.gstatic.com; script-src 'self' https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
+  Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+
+# Basic bot blocking by UA (not foolproof)
+RewriteEngine On
+RewriteCond %{HTTP_USER_AGENT} (?:curl|wget|python-requests|libwww-perl|bot|spider|crawler) [NC]
+RewriteRule .* - [F,L]
+
+# Prevent access to the data folder
+<Directory "/data">
+  Order allow,deny
+  Deny from all
+</Directory>

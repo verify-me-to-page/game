@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin
+Disallow: /data
+# Allow Google's friendly crawler to access public pages
+User-agent: Googlebot
+Allow: /
